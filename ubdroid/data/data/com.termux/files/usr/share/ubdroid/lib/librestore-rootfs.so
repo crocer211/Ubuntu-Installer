@@ -1,0 +1,29 @@
+#!/data/data/com.termux/files/usr/bin/bash
+STATEFUL="$PREFIX/share/debdroid"
+set -e -u
+
+while true; do
+    read -p "WARNING: Importing rootfs will replace your installation. do you want to continue [y/N] " yn
+    case $yn in
+        [Yy]* ) exec; break;;
+        [Nn]* ) echo "Aborting..."; exit 2;;
+        * ) echo "Aborting..."; exit 2;;
+    esac
+done
+
+read -e -p "Enter the path of your backups. You may use tab for Autocompletion: " backup
+### Check for Backup
+if [ -e "$backup" ]; then
+    exec
+else
+    echo "An error has occurred: No such file or directory. aborting exit code 2"
+    exit 2
+fi
+
+echo "Preparing to import..."
+chmod 777 $STATEFUL/rootfs -R > /dev/null 2>&1 || true
+rm -rf $STATEFUL/rootfs > /dev/null 2>&1
+echo "Importing the Container"
+proot --link2symlink -0 tar -zxf "$backup" -C $STATEFUL >/dev/null 2>&1
+echo "Container successfully imported..."
+exit 1
