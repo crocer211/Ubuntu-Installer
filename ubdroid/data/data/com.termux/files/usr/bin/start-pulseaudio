@@ -1,0 +1,11 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+### Check if pulseaudio is running. if it is, then use pulseaudio
+if pidof pulseaudio >/dev/null 2>&1; then
+    echo "Using the current pulseaudio process" > $PREFIX/tmp/stderr-pulse.log 2>&1
+else
+    pulseaudio --start --exit-idle-time=-1 >/dev/null 2>&1
+fi
+
+### Load Native Modules. 
+pacmd load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1 >/dev/null 2>&1 || true

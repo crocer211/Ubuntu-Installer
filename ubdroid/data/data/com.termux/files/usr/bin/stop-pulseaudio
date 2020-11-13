@@ -1,0 +1,10 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+sleep 1
+
+### If another instance of debdroid is running. don't close it
+if pidof -xs debdroid >/dev/null 2>&1; then
+    echo "Cannot Kill pulseaudio yet" > $PREFIX/tmp/stderr-pulse.log 2>&1
+else
+    pulseaudio -k >/dev/null 2>&1 || true
+fi
