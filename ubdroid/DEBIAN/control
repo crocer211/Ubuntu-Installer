@@ -1,9 +1,0 @@
-Package: ubdroid
-Version: 1.0
-Section: base
-Priority: optional 
-Architecture: all 
-Depends: wget, dialog, proot, tar, pulseaudio
-Maintainer: @wmcbtech30
-Description: Run Ubuntu Without Root on your Android Device
-Modified:  @XeroTime
